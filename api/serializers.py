@@ -2,6 +2,8 @@ from rest_framework import serializers
 from .views import *
 from .models import *
 from rest_framework import serializers
+from django.contrib.auth.models import User
+
 
 
 class RegisterSerializer(serializers.Serializer):
@@ -21,6 +23,15 @@ class RegisterSerializer(serializers.Serializer):
                 raise serializers.ValidationError('Username is Taken')
 
         return data
+    
+    def create(self, validated_data):
+         user = User.objects.create(username = validated_data['username'] , email = validated_data['email'])
+         user.set_password(password = validated_data['password'])
+         return validated_data
+         print(validated_data)
+
+
+
 
 
 class LoginSerializer(serializers.Serializer):
