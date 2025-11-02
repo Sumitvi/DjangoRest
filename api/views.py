@@ -7,6 +7,42 @@ from rest_framework.views import APIView
 from rest_framework import viewsets
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
+from rest_framework.authtoken.models import Token
+
+
+
+
+class LoginView(APIView):
+
+    def post(self, request):
+        data = request.data
+        serializer = LoginSerializer(data=data)
+
+        if not serializer.is_valid():
+            return Response({
+                "status": False,
+                "message": serializer.errors
+            })
+
+        username = serializer.validated_data['username']
+        password = serializer.validated_data['password']
+
+        user = authenticate(username=username, password=password)
+
+        if user is None:
+            return Response({
+                "status": False,
+                "message": "Invalid username or password"
+            })
+
+        token, _ = Token.objects.get_or_create(user=user)
+
+        return Response({
+            "status": True,
+            "message": "Login successfully",
+            "token": token.key
+        })
+
 
 
 

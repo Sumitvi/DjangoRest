@@ -12,10 +12,11 @@ urlpatterns = [
     
     path('', include(router.urls)),
 
-    path('login/', login , name='Login View' ),
+    # path('login/', login , name='Login View' ),
     path('person/', person , name='Person' ),
     path('auth/' , Auth , name="Auth"),
     path('person-api/' , PersonAPI.as_view()),
-    path('register/' , RegisterView.as_view() )
+    path('register/' , RegisterView.as_view() ),
+    path('login/' , LoginView.as_view())
 
 ]
