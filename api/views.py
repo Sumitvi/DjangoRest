@@ -2,13 +2,18 @@ from django.shortcuts import render
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from .models import *
-from .serializers import PeopleSerializer , LoginSerializer
+from .serializers import PeopleSerializer , LoginSerializer , RegisterSerializer
 from rest_framework.views import APIView
 from rest_framework import viewsets
 from django.contrib.auth.models import User
 
 
 
+class RegisterView(APIView):
+
+    def post(self , request):
+        data = request.data
+        serializer = RegisterSerializer(data = data)
 
 
 
