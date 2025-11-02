@@ -9,6 +9,16 @@ from rest_framework import viewsets
 
 # Create your views here.
 
+
+    # Model View Sets
+
+class PersonViewSet(viewsets.ModelViewSet):
+        queryset = Person.objects.all()
+        serializer_class = PeopleSerializer
+
+
+
+
 class PersonAPI(APIView):
 
     def get(self , request):
@@ -100,6 +110,3 @@ def person(request):
     
 
 
-
-    # Model View Sets
-    
