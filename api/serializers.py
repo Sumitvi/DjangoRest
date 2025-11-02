@@ -9,7 +9,18 @@ class RegisterSerializer(serializers.Serializer):
     email = serializers.EmailField()
     password = serializers.CharField()
 
+    def validate(self, data):
+        if data['username']:
+            if User.objects.filter(username = data['username']).exists():
+                raise serializers.ValidationError('Username is Taken')
+            
 
+    def validate(self, data):
+        if data['email']:
+            if User.objects.filter(email = data['email']).exists():
+                raise serializers.ValidationError('Username is Taken')
+
+        return data
 
 
 class LoginSerializer(serializers.Serializer):
