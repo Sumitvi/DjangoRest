@@ -5,9 +5,11 @@ from .models import *
 from .serializers import PeopleSerializer , LoginSerializer
 from rest_framework.views import APIView
 from rest_framework import viewsets
+from django.contrib.auth.models import User
 
 
-# Create your views here.
+
+
 
 
     # Model View Sets
