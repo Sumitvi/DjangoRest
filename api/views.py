@@ -14,34 +14,27 @@ from rest_framework.authtoken.models import Token
 
 class LoginView(APIView):
 
-    def post(self, request):
+    def post(self , request):
         data = request.data
-        serializer = LoginSerializer(data=data)
-
+        serializer = LoginSerializer(data = data)
         if not serializer.is_valid():
             return Response({
                 "status": False,
                 "message": serializer.errors
             })
-
-        username = serializer.validated_data['username']
-        password = serializer.validated_data['password']
-
-        user = authenticate(username=username, password=password)
-
-        if user is None:
+        
+        
+        print(serializer)
+        user = authenticate(username = serializer.data['username'] , password = serializer.data['password'])
+        if not user:
             return Response({
                 "status": False,
-                "message": "Invalid username or password"
+                "message": "invalid credentials"
             })
 
-        token, _ = Token.objects.get_or_create(user=user)
 
-        return Response({
-            "status": True,
-            "message": "Login successfully",
-            "token": token.key
-        })
+        token = Token.objects.get_or_create(user=user)
+        return Response({"status" : True , "message" : "Login Sucessfully" , "token" : str(token)})
 
 
 
